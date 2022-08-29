@@ -6,22 +6,14 @@ public class Customer {
     private boolean sex;
     private int age;
     public Customer(){
-        this.ID = "";
-        this.name = null;
-        this.sex = false;
-        this.age = 0;
+        this("", null, "female", 0);
     }
 
-    public Customer(String ID, String name, boolean sex, int age) {
-        this.ID = ID;
-        this.name = name;
-        this.sex = sex;
-        if(age < 0){
-            this.age = 0;
-        }
-        else{
-            this.age = age;
-        }
+    public Customer(String ID, String name, String s, int a) {
+        setID(ID);
+        setName(name);
+        setSex(s);
+        setAge(a);
     }
 
     public String getID() {
@@ -40,12 +32,12 @@ public class Customer {
         this.name = name;
     }
 
-    public boolean isSex() {
+    public boolean getSex() {
         return sex;
     }
 
-    public void setSex(boolean sex) {
-        this.sex = sex;
+    public void setSex(String sex) {
+        this.sex = sex.toLowerCase().equals("male");
     }
 
     public int getAge() {
@@ -53,6 +45,11 @@ public class Customer {
     }
 
     public void setAge(int age) {
-        this.age = age;
+        if(age < 0){
+            this.age = 0;
+        }
+        else{
+            this.age = age;
+        }
     }
 }

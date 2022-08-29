@@ -9,19 +9,67 @@ public class CustomerController {
     private List<Customer> customers;
 
     public CustomerController() {
-
+        this.customers = new ArrayList<Customer>();
+        this.customers.add(new Customer("1010", "John", "Male", 25));
+        this.customers.add(new Customer("1018", "Peter", "Male", 24));
+        this.customers.add(new Customer("1019", "Sara", "Female", 23));
+        this.customers.add(new Customer("1110", "Rose", "Female", 23));
+        this.customers.add(new Customer("1001", "Emma", "Female", 30));
     }
 
-    public List<Customer> getCustomers(){}
+    @RequestMapping("/customers")
+    public List<Customer> getCustomers(){
+        return customers;
+    }
 
-    public Customer getCustomerByID( String ID){}
+    @RequestMapping("/customerbyid/{id}")
+    public Customer getCustomerByID(@PathVariable("id") String ID){
+        for (Customer x: customers) {
+            if (x.getID().equals(ID)){
+                return x;
+            }
+        }
+        return null;
+    }
 
-    public Customer getCustomerByName( String n){}
+    @RequestMapping("/customerbyname/{name}")
+    public Customer getCustomerByName(@PathVariable("name") String n){
+        for (Customer x: customers) {
+            if (x.getName().equals(n)){
+                return x;
+            }
+        }
+        return null;
+    }
 
-    public boolean delCustomerByID( String ID){}
+    @RequestMapping("/customerDelByid/{id}")
+    public boolean delCustomerByID(@PathVariable("id") String ID){
+        for (Customer x: customers) {
+            if (x.getID().equals(ID)){
+                return getCustomers().remove(x);
+            }
+        }
+        return false;
+    }
 
-    public boolean delCustomerByName( String n){}
+    @RequestMapping("/customerDelByName/{name}")
+    public boolean delCustomerByName(@PathVariable("name") String n){
+        for (Customer x: customers) {
+            if (x.getName().equals(n)){
+                return getCustomers().remove(x);
+            }
+        }
+        return false;
+    }
 
-    public boolean addCustomer(String ID, String n, String s, int a){}
+    @RequestMapping("/addCustomer")
+    public boolean addCustomer(@RequestParam("id") String ID,@RequestParam("name") String n,@RequestParam("sex") String s,@RequestParam("age") int a){
+        return getCustomers().add(new Customer(ID, n, s, a));
+    }
+
+    @RequestMapping(value = "/addCustomer2", method = RequestMethod.POST)
+    public boolean addCustomer2(@RequestParam("id") String ID,@RequestParam("name") String n,@RequestParam("sex") String s,@RequestParam("age") int a){
+        return getCustomers().add(new Customer(ID, n, s, a));
+    }
 
 }
